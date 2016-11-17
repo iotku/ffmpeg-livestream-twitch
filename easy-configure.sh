@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Select Window to capture."
 wininfo=$(xwininfo)
 width=$(echo "$wininfo" | grep Width  | cut -c 10-)
 height=$(echo "$wininfo" | grep Height | cut -c 11-)
@@ -7,3 +8,5 @@ posy=$(echo "$wininfo" | grep "Absolute upper-left Y" | cut -c 27-)
 
 echo SCREENCAP_AREA=\"${posx},${posy}\" > screencast-settings
 echo SCREENCAP_SIZE=\"${width}x${height}\" >> screencast-settings
+
+echo "Configured for area: x=${posx}, y=${posy}. Size: ${width}x${height}"
