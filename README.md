@@ -23,7 +23,7 @@ I'm currently on a system which doesn't have a gpu that supports OBS (old integr
 ## Audio
 JACK is the main force behind audio routing and qjackctl is used as an easy method way to start/configure JACK.
 
-Qjackctl is setup to launch jack (w/ dbus interface) which tells pulseaudio (with jack plugin installed) 
+Qjackctl is setup to launch jack2 (w/ dbus interface) which tells pulseaudio (with jack plugin installed) 
 to create a jack sink, the additional startup scripts (in /jack-stuff) switch the default pulseaudio sink to the JACK sink
 and switch current clients over so I don't have to do it manually.
 
