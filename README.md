@@ -21,6 +21,13 @@ I'm currently on a system which doesn't have a gpu that supports OBS (old integr
 #How I do it....
 
 ## Audio
+Pulseaudio is used for capturing alsa/pulseaudio applications that don't support jack directly, disavantage is added latency from running 2 sound systems.
+default.pa is configured with
+
+    load-module module-stream-restore restore_device=false
+
+So applications always (hopefully) just use the selected input instead of remembering an incorrect one.
+
 JACK is the main force behind audio routing and qjackctl is used as an easy method way to start/configure JACK.
 
 Qjackctl is setup to launch jack2 (w/ dbus interface) which tells pulseaudio (with jack plugin installed) 
