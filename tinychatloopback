@@ -1,0 +1,2 @@
+# loopback for v4l2loopback for use with tinychat
+ffmpeg -video_size $SCREENCAP_SIZE -framerate 10 -thread_queue_size 50k -f x11grab -show_region 1 -i :0.0+${SCREENCAP_AREA} -vcodec rawvideo -pix_fmt yuv420p -threads 0 -vf "scale=w=320:h=240 " -f v4l2 /dev/video0
