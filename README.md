@@ -2,7 +2,7 @@
 - FFmpeg (Streaming/Screen Capture)
     - x11grab for screen capture
     - libx264 for h264 encoding
-    - built in ffmpeg aac encoder, should change to fdk at some point
+    - fdk aac encoder
 
 - Jack Audio
     - qjackctl to set up routing/patchbay and launch jack
@@ -42,7 +42,3 @@ Qjackctl's patchbay remembers the connections used and automatically applies the
 ### Video
 Video is currently very basic and unflexable, I can select a window in order to capture a specific area of my desktop, 
 however after it is set it can not be modified nor does it follow changing window position.
-
-My Dazzle is cropped and deinterlaced, however the yandif interlacing seems to be not perfect for N64 material and sometimes the color seems to get desynced with the rest of the image.
-
-TODO: Figure out how to properly use overlay so I can have splits + a video source, espcially for Dazzle
