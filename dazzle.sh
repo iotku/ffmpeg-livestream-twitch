@@ -9,9 +9,14 @@ X264_PRESET="faster"
 CROP_W="570"
 CROP_H="448"
 CROP_X="32"
-CROP_Y="16"
+CROP_Y="18"
 SPLIT_SIZEW=300
 SPLIT_SIZEH=580
+
+SPLIT_SIZEW=300
+SPLIT_SIZEH=580
+
+
 STREAM_W=854
 STREAM_H=480
 # math stuff
@@ -25,12 +30,18 @@ fi
 
 v4lctl setinput s-video
 v4lctl setnorm ntsc
+v4lctl color 78
+v4lctl contrast 68
+v4lctl bright 138
+v4lctl setattr sharpness 3
 ffmpeg -f v4l2 -video_size 640x480 -framerate 29.97 -thread_queue_size 50k -i /dev/video0 -thread_queue_size 50k \
     -f x11grab -video_size ${SPLIT_SIZEW}x${SPLIT_SIZEH} -framerate 29.97 -draw_mouse 0 -show_region 1 -i :0.0+1247,132 -thread_queue_size 50k \
     -f jack -i ffmpeg -ac 2 -c:a libfdk_aac -b:a $AUDIO_BITRATE -ar 44100 -vcodec libx264 -preset $X264_PRESET -pix_fmt yuv420p -profile:v high -level 4.0 -g 59.94 \
     -b:v $VIDEO_BITRATE -minrate $VIDEO_BITRATE -maxrate $VIDEO_BITRATE -bufsize $VIDEO_BITRATE -vsync 1 \
+    -sws_flags lanczos \
     -filter_complex "[0:v]yadif=3:0[deint];[deint]crop=w=${CROP_W}:h=${CROP_H}:x=${CROP_X}:y=${CROP_Y}[deint];[deint]scale=${CALC_CAP_W}:${STREAM_H}[deint];[1:v]scale=${WIDTH_LEFT}:${CALC_SPLIT_H}[splits];[splits]pad=${STREAM_W}:${STREAM_H}[splits];[splits][deint]overlay=${WIDTH_LEFT}:0[vid];[2:a]adelay=${AUDIO_DELAY}|${AUDIO_DELAY}[daudio]"\
     -map [vid] -map [daudio] \
-    -f flv "rtmp://${RESTREAM_URL_IOTKU}"
+    output.mkv
+#   -f flv "rtmp://${RESTREAM_URL_IOTKU}"
  #   -f flv "rtmp://${TWITCH_STREAM_URL_IOTKU}"
 
